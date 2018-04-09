@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Group extends Model
 {
@@ -18,6 +19,18 @@ class Group extends Model
         'is_leaf' => 'boolean',
         'arrows' => 'json',
     ];
+
+    public function scopeWhereVisible(Builder $query, $isVisible = true)
+    {
+        $query->where('is_visible', $isVisible);
+        return $query;
+    }
+
+    public function scopeWhereLeaf(Builder $query, $isLeaf = true)
+    {
+        $query->where('is_leaf', $isLeaf);
+        return $query;
+    }
 
     public function parents()
     {
