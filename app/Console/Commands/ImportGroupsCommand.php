@@ -54,6 +54,7 @@ class ImportGroupsCommand extends Command
                 $group->name = $item->name;
                 $group->image_type = $item->img_type;
                 $group->image_colors = $item->img_color;
+                $group->is_visible = $item->inc;
                 $group->save();
             });
         });

@@ -22,6 +22,7 @@ class CreateGroupsTable extends Migration
             $table->string('image_colors')->nullable();
 
             $table->boolean('is_leaf')->default(false);
+            $table->boolean('is_visible')->default(false);
         });
     }
 
