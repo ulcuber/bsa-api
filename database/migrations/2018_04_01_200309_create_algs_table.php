@@ -13,17 +13,19 @@ class CreateAlgsTable extends Migration
      */
     public function up()
     {
-        Schema::create('algs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        if (!Schema::hasTable('algs')) {
+            Schema::create('algs', function (Blueprint $table) {
+                $table->increments('id');
+                $table->timestamps();
 
-            $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+                $table->integer('group_id')->unsigned();
+                $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
 
-            $table->string('alg');
+                $table->string('alg');
 
-            $table->boolean('is_confirmed')->default(false);
-        });
+                $table->boolean('is_confirmed')->default(false);
+            });
+        }
     }
 
     /**

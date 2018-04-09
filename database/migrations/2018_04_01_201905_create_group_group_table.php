@@ -13,12 +13,14 @@ class CreateGroupGroupTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_group', function (Blueprint $table) {
-            $table->integer('parent_id')->unsigned();
-            $table->foreign('parent_id')->references('id')->on('groups')->onDelete('cascade');
-            $table->integer('child_id')->unsigned();
-            $table->foreign('child_id')->references('id')->on('groups')->onDelete('cascade');
-        });
+        if (!Schema::hasTable('group_group')) {
+            Schema::create('group_group', function (Blueprint $table) {
+                $table->integer('parent_id')->unsigned();
+                $table->foreign('parent_id')->references('id')->on('groups')->onDelete('cascade');
+                $table->integer('child_id')->unsigned();
+                $table->foreign('child_id')->references('id')->on('groups')->onDelete('cascade');
+            });
+        }
     }
 
     /**

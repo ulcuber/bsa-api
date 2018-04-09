@@ -13,17 +13,19 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamps();
+        if (!Schema::hasTable('groups')) {
+            Schema::create('groups', function (Blueprint $table) {
+                $table->increments('id');
+                $table->timestamps();
 
-            $table->string('name');
-            $table->string('image_type')->nullable();
-            $table->string('image_colors')->nullable();
+                $table->string('name');
+                $table->string('image_type')->nullable();
+                $table->string('image_colors')->nullable();
 
-            $table->boolean('is_leaf')->default(false);
-            $table->boolean('is_visible')->default(false);
-        });
+                $table->boolean('is_leaf')->default(false);
+                $table->boolean('is_visible')->default(false);
+            });
+        }
     }
 
     /**
