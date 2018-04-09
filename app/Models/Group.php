@@ -29,8 +29,8 @@ class Group extends Model
         return $this->belongsToMany(static::class, 'group_group', 'parent_id', 'child_id');
     }
 
-    public function algorythms()
+    public function algs()
     {
-        return $this->hasMany(Algorythm::class);
+        return $this->hasMany(Alg::class);
     }
 }

@@ -98,7 +98,7 @@ class ImportGroupsCommand extends Command
                             ->where('sit_id', $sit->id)
                             ->get()
                             ->each(function ($alg) use ($leafgroup) {
-                                $leafgroup->algorythms()->create([
+                                $leafgroup->algs()->create([
                                     'alg' => $alg->alg,
                                     'is_confirmed' => $alg->stat,
                                 ]);

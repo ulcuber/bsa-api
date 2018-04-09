@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Algorythm extends Model
+class Alg extends Model
 {
     protected $fillable = [
         'group_id',
