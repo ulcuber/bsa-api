@@ -90,6 +90,7 @@ class ImportGroupsCommand extends Command
                             $leafgroup->name = $group->name;
                             $leafgroup->image_type = $sit->img_type;
                             $leafgroup->image_colors = $sit->img_color;
+                            $leafgroup->is_visible = true;
                             $leafgroup->is_leaf = true;
                             $leafgroup->save();
                             $group->children()->syncWithoutDetaching($leafgroup->id);

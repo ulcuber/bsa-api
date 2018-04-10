@@ -15,7 +15,7 @@ class GroupController extends Controller
     {
         if ($request->has('group_id')) {
             $groups = Group::whereHas('parents', function ($q) use ($request) {
-                $q->where('id', $request->input('group_id'));
+                $q->where('parent_id', $request->input('group_id'));
             })->whereVisible()->get();
         } else {
             $groups = Group::has('parents', 0)->whereLeaf(false)->whereVisible()->get();
