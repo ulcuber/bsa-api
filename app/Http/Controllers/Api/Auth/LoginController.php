@@ -2,27 +2,13 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Hash;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Laravel\Passport\ApiTokenCookieFactory;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
-    use AuthenticatesUsers;
-
     /**
      * Create a new controller instance.
      *
@@ -33,33 +19,40 @@ class LoginController extends Controller
         $this->middleware('guest:api')->except('logout:api');
     }
 
-    public function authenticate(Request $request)
+    public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $email = $request->input('email');
+        $password = $request->input('password');
+        $remember = (bool) $request->input('remember');
+        $user = User::where('email', $email)->first();
 
-        if (Auth::guard('api')->attempt($credentials)) {
-            $token = Auth::user()->createToken('user_token')->accessToken;
-            return response()->json(['token' => $token]);
-        }
+        $this->validateLogin($user, $password);
+
+        $token = $user->createToken('user_token')->accessToken;
+
+        return response()->json(['token' => $token]);
     }
 
     public function logout(Request $request)
     {
         $this->guard()->logout();
 
-        $request->session()->invalidate();
-
         return response()->json([true]);
     }
 
-    protected function sendLoginResponse(Request $request)
+    protected function validateLogin($user, $password)
     {
-        $request->session()->regenerate();
+        if (is_null($user)) {
+            throw ValidationException::withMessages([
+                'email' => __('Wrong email'),
+            ]);
+        }
 
-        $this->clearLoginAttempts($request);
-
-        return $this->authenticated($request, $this->guard()->user())
-                ?: response()->json([false]);
+        if (! Hash::check($password, $user->password)) {
+            throw ValidationException::withMessages([
+                'password' => __('Wrong password'),
+            ]);
+        }
     }
 
     protected function guard()
