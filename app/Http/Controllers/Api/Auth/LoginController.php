@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api\Auth;
 
 use Hash;
 use Auth;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
