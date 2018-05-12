@@ -24,6 +24,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // Passport::token('user_token');
+        //
     }
 }
