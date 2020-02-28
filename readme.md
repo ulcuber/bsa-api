@@ -1,6 +1,6 @@
 # Installation
 ```bash
-cp .env.exapmple .env
+cp .env.example .env
 # Edit env
 
 composer install
